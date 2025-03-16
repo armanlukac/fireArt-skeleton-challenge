@@ -14,13 +14,15 @@ import { SignupDto } from './dto/signup.dto';
 import { UsersService } from '../users/users.service';
 import { LoginDto } from './dto/login.dto';
 import { LogoutDto } from './dto/logout.dto';
-import { Request } from 'express';
+import { RequestWithUser } from './types/request-with-user';
+import { JwtService } from '@nestjs/jwt';
 
 @Controller('auth') // Ensure route prefix is set
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
     private readonly usersService: UsersService,
+    private readonly jwtService: JwtService,
   ) {}
 
   @Post('signup')
@@ -58,11 +60,24 @@ export class AuthController {
 
   @Post('logout')
   @UsePipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
-  logout(@Body() body: LogoutDto, @Req() req: Request) {
+  async logout(@Body() body: LogoutDto, @Req() req: RequestWithUser) {
     // Ensure request contains a valid token
-    if (!req['user']) {
+    if (!req.user) {
       return { message: 'Invalid token or user not authenticated' };
     }
+
+    const token = body.access_token;
+    if (!token) {
+      throw new BadRequestException('Access token is missing');
+    }
+    const decoded = (await this.jwtService.decode(token)) as { exp: number };
+
+    if (!decoded || !decoded.exp) {
+      return { message: 'Invalid token' };
+    }
+
+    const expiresAt = new Date(decoded.exp * 1000);
+    await this.usersService.blacklistToken(token, expiresAt);
 
     return { message: 'Logged out successfully' };
   }

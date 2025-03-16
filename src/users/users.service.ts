@@ -35,6 +35,21 @@ export class UsersService {
     return result.rows[0];
   }
 
+  async blacklistToken(token: string, expiresAt: Date) {
+    await this.db.query(
+      `INSERT INTO blacklisted_tokens (token, expires_at) VALUES ($1, $2)`,
+      [token, expiresAt],
+    );
+  }
+
+  async isTokenBlacklisted(token: string): Promise<boolean> {
+    const result = await this.db.query(
+      `SELECT 1 FROM blacklisted_tokens WHERE token = $1 LIMIT 1`,
+      [token],
+    );
+    return result.rowCount > 0;
+  }
+
   async createUser(
     email: string,
     password: string,

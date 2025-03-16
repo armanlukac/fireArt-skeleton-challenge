@@ -27,6 +27,14 @@ export class MigrationsService implements OnModuleInit {
                 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
       `);
+
+      await this.db.query(`
+        CREATE TABLE IF NOT EXISTS blacklisted_tokens (
+          id SERIAL PRIMARY KEY,
+          token TEXT NOT NULL,
+          expires_at TIMESTAMP NOT NULL
+        );
+      `);
     } catch (error) {
       console.error('Failed to run migrations, with error ->', error);
     }

@@ -10,7 +10,7 @@ import { JwtService } from '@nestjs/jwt';
 export class JwtAuthMiddleware implements NestMiddleware {
   constructor(private readonly jwtService: JwtService) {}
 
-  use(req: Request, res: Response, next: NextFunction) {
+  async use(req: Request, res: Response, next: NextFunction) {
     const authHeader = req.headers.authorization;
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
       throw new UnauthorizedException('No token provided');
@@ -18,7 +18,7 @@ export class JwtAuthMiddleware implements NestMiddleware {
 
     const token = authHeader.split(' ')[1]; // Extract the token
     try {
-      const decoded = this.jwtService.verify(token);
+      const decoded = await this.jwtService.verifyAsync(token);
       req['user'] = decoded; // Attach decoded user data to the request
       next();
     } catch (error) {
