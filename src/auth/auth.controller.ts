@@ -22,6 +22,7 @@ import { ResetPasswordDto } from './dto/reset-password.dto';
 import * as crypto from 'crypto';
 import { ConfigService } from '@nestjs/config';
 import { EmailService } from '../email/email.service';
+import { VerifyUserDto } from './dto/verify-user.dto';
 
 @Controller('auth') // Ensure route prefix is set
 export class AuthController {
@@ -58,6 +59,18 @@ export class AuthController {
     }
 
     return { message: 'Email verified successfully. You can now log in.' };
+  }
+
+  @Post('verify-user-manually')
+  @UsePipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
+  async verifyUser(@Body() body: VerifyUserDto) {
+    const user = await this.usersService.verifyUserManually(body.email);
+
+    if (!user) {
+      throw new BadRequestException('User not found or already verified.');
+    }
+
+    return { message: 'User verified successfully', email: user.email };
   }
 
   @Post('login')

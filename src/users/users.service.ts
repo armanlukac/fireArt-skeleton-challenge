@@ -36,6 +36,15 @@ export class UsersService {
     return result.rows[0];
   }
 
+  async verifyUserManually(email: string) {
+    const result = await this.db.query(
+      `UPDATE users SET is_verified = TRUE, status = 1, verification_token = NULL WHERE email = $1 RETURNING id, email`,
+      [email],
+    );
+
+    return result.rows[0] || null;
+  }
+
   async blacklistToken(token: string, expiresAt: Date) {
     await this.db.query(
       `INSERT INTO blacklisted_tokens (token, expires_at) VALUES ($1, $2)`,
