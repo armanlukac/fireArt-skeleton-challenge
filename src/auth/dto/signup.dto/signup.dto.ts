@@ -2,7 +2,7 @@ import { IsEmail, IsString, MinLength, Matches } from 'class-validator';
 
 export class SignupDto {
   @IsEmail({}, { message: 'Invalid email format' })
-  email: string;
+  email!: string;
 
   @IsString()
   @MinLength(8, { message: 'Password must be at least 8 characters long' })
@@ -16,13 +16,13 @@ export class SignupDto {
   @Matches(/[@$!%*?&]/, {
     message: 'Password must contain at least one special character (@$!%*?&)',
   })
-  password: string;
+  password!: string;
 
   @IsString()
   @MinLength(3, { message: 'First name must be at least 3 characters long' })
-  first_name: string;
+  first_name?: string;
 
   @IsString()
   @MinLength(3, { message: 'Last name must be at least 3 characters long' })
-  last_name: string;
+  last_name?: string;
 }
