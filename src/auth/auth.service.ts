@@ -27,15 +27,17 @@ export class AuthService {
       throw new ConflictException('Email already in use');
     }
 
-    // Create new user using UsersService
-    return {
-      message: 'User registered successfully',
-      user: await this.usersService.createUser(
-        email,
-        password,
-        first_name,
-        last_name,
-      ),
-    };
+    const user = await this.usersService.createUser(
+      email,
+      password,
+      first_name,
+      last_name,
+    );
+
+    if (user) {
+      return {
+        message: `User registered successfully. Email: ${email}`,
+      };
+    }
   }
 }

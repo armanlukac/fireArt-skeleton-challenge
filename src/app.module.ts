@@ -6,6 +6,7 @@ import { HealthModule } from './health/health.module';
 import { MigrationsModule } from './migrations/migrations.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
+import { EmailModule } from './email/email.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { UsersModule } from './users/users.module';
     MigrationsModule,
     AuthModule,
     UsersModule,
+    EmailModule,
   ],
   controllers: [HealthController],
   providers: [DatabaseService],
