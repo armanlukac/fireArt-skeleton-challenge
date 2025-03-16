@@ -46,6 +46,21 @@ export class MigrationsService implements OnModuleInit {
           used BOOLEAN DEFAULT FALSE
         );
       `);
+
+      // Random entity chosen for demonstration purposes (CRUD operations)
+      await this.db.query(`
+        CREATE TABLE IF NOT EXISTS companies (
+          id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+          name VARCHAR(255) NOT NULL UNIQUE,
+          contact VARCHAR(255) NOT NULL,
+          city VARCHAR(100),
+          country VARCHAR(100),
+          website VARCHAR(255),
+          status INTEGER DEFAULT 1,
+          created_at TIMESTAMP DEFAULT NOW(),
+          updated_at TIMESTAMP DEFAULT NOW()
+        );
+      `);
     } catch (error) {
       console.error('Failed to run migrations, with error ->', error);
     }

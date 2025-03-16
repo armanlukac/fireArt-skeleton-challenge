@@ -9,6 +9,7 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { EmailModule } from './email/email.module';
 import { JwtAuthMiddleware } from './auth/jwt-auth/jwt-auth.middleware';
+import { CompaniesModule } from './companies/companies.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { JwtAuthMiddleware } from './auth/jwt-auth/jwt-auth.middleware';
     AuthModule,
     UsersModule,
     EmailModule,
+    CompaniesModule,
   ],
   controllers: [HealthController],
   providers: [DatabaseService],
