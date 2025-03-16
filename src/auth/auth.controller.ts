@@ -7,11 +7,14 @@ import {
   ValidationPipe,
   Query,
   BadRequestException,
+  Req,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignupDto } from './dto/signup.dto';
 import { UsersService } from '../users/users.service';
 import { LoginDto } from './dto/login.dto';
+import { LogoutDto } from './dto/logout.dto';
+import { Request } from 'express';
 
 @Controller('auth') // Ensure route prefix is set
 export class AuthController {
@@ -51,5 +54,16 @@ export class AuthController {
   @UsePipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
   async login(@Body() body: LoginDto) {
     return this.authService.login(body.email, body.password);
+  }
+
+  @Post('logout')
+  @UsePipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
+  logout(@Body() body: LogoutDto, @Req() req: Request) {
+    // Ensure request contains a valid token
+    if (!req['user']) {
+      return { message: 'Invalid token or user not authenticated' };
+    }
+
+    return { message: 'Logged out successfully' };
   }
 }
