@@ -71,7 +71,6 @@ export class UsersService {
       `INSERT INTO users (email, password, first_name, last_name) VALUES ($1, $2, $3, $4) RETURNING id, email, first_name, created_at`,
       [email, hashedPassword, first_name, last_name],
     );
-    console.log('User created:', result.rows[0]);
     return result.rows[0];
   }
 
