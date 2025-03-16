@@ -8,7 +8,7 @@ export class UsersService {
 
   async getUserByEmail(email: string) {
     const result = await this.db.query(
-      `SELECT id, email, password FROM users WHERE email = $1`,
+      `SELECT id, email, password, is_verified, status FROM users WHERE email = $1`,
       [email],
     );
     return result.rows[0] || null;
@@ -21,6 +21,10 @@ export class UsersService {
     );
     console.log(result.rows[0]);
     return result.rows[0];
+  }
+
+  async verifyPassword(storedPassword: string, inputPassword: string) {
+    return bcrypt.compare(inputPassword, storedPassword);
   }
 
   async verifyUser(token: string) {

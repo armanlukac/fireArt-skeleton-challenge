@@ -11,6 +11,7 @@ import {
 import { AuthService } from './auth.service';
 import { SignupDto } from './dto/signup.dto';
 import { UsersService } from '../users/users.service';
+import { LoginDto } from './dto/login.dto';
 
 @Controller('auth') // Ensure route prefix is set
 export class AuthController {
@@ -44,5 +45,11 @@ export class AuthController {
     }
 
     return { message: 'Email verified successfully. You can now log in.' };
+  }
+
+  @Post('login')
+  @UsePipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
+  async login(@Body() body: LoginDto) {
+    return this.authService.login(body.email, body.password);
   }
 }
