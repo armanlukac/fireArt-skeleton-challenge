@@ -13,14 +13,20 @@ export class CompaniesService {
        VALUES ($1, $2, $3, $4, $5) RETURNING *`,
       [dto.name, dto.contact, dto.city, dto.country, dto.website],
     );
-    return result.rows[0];
+    return {
+      message: 'Company created successfully',
+      data: result.rows[0],
+    };
   }
 
   async getAllCompanies() {
     const result = await this.db.query(
       `SELECT * FROM companies WHERE status = 1 ORDER BY created_at DESC`,
     );
-    return result.rows;
+    return {
+      message: 'All companies',
+      data: result.rows,
+    };
   }
 
   async getAllCompaniesPaginated(page: number, limit: number) {
@@ -38,6 +44,7 @@ export class CompaniesService {
     const totalPages = Math.ceil(total / limit);
 
     return {
+      message: 'All companies (paginated)',
       data: result.rows,
       pagination: {
         total,
@@ -54,7 +61,10 @@ export class CompaniesService {
       [id],
     );
     if (!result.rows.length) throw new NotFoundException('Company not found');
-    return result.rows[0];
+    return {
+      message: 'Company found',
+      data: result.rows[0],
+    };
   }
 
   async searchCompanies(query: string) {
@@ -62,7 +72,10 @@ export class CompaniesService {
       `SELECT * FROM companies WHERE (name ILIKE $1 OR city ILIKE $1 OR country ILIKE $1 OR contact ILIKE $1) AND status = 1`,
       [`%${query}%`],
     );
-    return result.rows;
+    return {
+      message: 'Search results',
+      data: result.rows,
+    };
   }
 
   async updateCompany(id: string, dto: UpdateCompanyDto) {
@@ -87,7 +100,10 @@ export class CompaniesService {
       ],
     );
     if (!result.rows.length) throw new NotFoundException('Company not found');
-    return result.rows[0];
+    return {
+      message: 'Company updated successfully',
+      data: result.rows[0],
+    };
   }
 
   async softDeleteCompany(id: string) {
@@ -96,7 +112,7 @@ export class CompaniesService {
       [id],
     );
     if (!result.rows.length) throw new NotFoundException('Company not found');
-    return { message: 'Company soft deleted successfully' };
+    return { message: 'Company deleted successfully' };
   }
 
   async permanentDeleteCompany(id: string) {

@@ -22,7 +22,7 @@ export class DatabaseService implements OnModuleInit {
   async onModuleInit() {
     try {
       await this.pool.query('SELECT NOW()'); // Test connection
-      console.log('Database connected');
+      // console.log('Database connected');
     } catch (error) {
       console.error('Failed to connect to database, with error ->', error);
     }

@@ -21,7 +21,7 @@ import { JwtAuthMiddleware } from '../auth/jwt-auth/jwt-auth.middleware';
 export class CompaniesController {
   constructor(private readonly companiesService: CompaniesService) {}
 
-  @Post()
+  @Post('create')
   @UsePipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
   async create(@Body() dto: CreateCompanyDto) {
     return this.companiesService.createCompany(dto);
