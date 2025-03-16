@@ -28,11 +28,9 @@ import { CompaniesModule } from './companies/companies.module';
 export class AppModule {
   constructor(private readonly databaseService: DatabaseService) {}
   configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(JwtAuthMiddleware)
-      .forRoutes(
-        { path: 'users/me', method: RequestMethod.GET },
-        { path: 'auth/logout', method: RequestMethod.POST },
-      );
+    consumer.apply(JwtAuthMiddleware).forRoutes('companies', {
+      path: 'auth/logout',
+      method: RequestMethod.POST,
+    });
   }
 }
