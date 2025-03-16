@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from '../database/database.service';
 import * as bcrypt from 'bcrypt';
+import * as crypto from 'crypto';
 
 @Injectable()
 export class UsersService {
@@ -63,5 +64,43 @@ export class UsersService {
     );
     console.log('User created:', result.rows[0]);
     return result.rows[0];
+  }
+
+  // Password reset methods
+  async storeResetToken(userId: string, token: string, expiresAt: Date) {
+    await this.db.query(
+      `INSERT INTO password_resets (user_id, token, expires_at) VALUES ($1, $2, $3)`,
+      [userId, token, expiresAt],
+    );
+  }
+
+  async storeResetOtp(userId: string, otp: string, expiresAt: Date) {
+    await this.db.query(
+      `INSERT INTO password_resets (user_id, otp, expires_at) VALUES ($1, $2, $3)`,
+      [userId, otp, expiresAt],
+    );
+  }
+
+  async validateResetToken(token: string) {
+    const result = await this.db.query(
+      `SELECT user_id FROM password_resets WHERE token = $1 AND expires_at > NOW() AND used = FALSE LIMIT 1`,
+      [token],
+    );
+    return result.rows[0] || null;
+  }
+
+  async validateResetOtp(otp: string) {
+    const result = await this.db.query(
+      `SELECT user_id FROM password_resets WHERE otp = $1 AND expires_at > NOW() AND used = FALSE LIMIT 1`,
+      [otp],
+    );
+    return result.rows[0] || null;
+  }
+
+  async markResetUsed(userId: string) {
+    await this.db.query(
+      `UPDATE password_resets SET used = TRUE WHERE user_id = $1`,
+      [userId],
+    );
   }
 }

@@ -35,6 +35,17 @@ export class MigrationsService implements OnModuleInit {
           expires_at TIMESTAMP NOT NULL
         );
       `);
+
+      await this.db.query(`
+        CREATE TABLE IF NOT EXISTS password_resets (
+          id SERIAL PRIMARY KEY,
+          user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+          token TEXT,
+          otp TEXT,
+          expires_at TIMESTAMP NOT NULL,
+          used BOOLEAN DEFAULT FALSE
+        );
+      `);
     } catch (error) {
       console.error('Failed to run migrations, with error ->', error);
     }
