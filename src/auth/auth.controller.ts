@@ -47,8 +47,6 @@ export class AuthController {
 
   @Get('verify-email')
   async verifyEmail(@Query('token') token: string) {
-    console.log('VERIFY EMAIL');
-    console.log('token', token);
     if (!token) {
       throw new BadRequestException('Invalid or missing verification token');
     }
