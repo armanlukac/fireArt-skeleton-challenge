@@ -21,7 +21,8 @@ export class MigrationsService implements OnModuleInit {
                 last_name VARCHAR(255) NOT NULL,
                 password TEXT NOT NULL,
                 is_verified BOOLEAN DEFAULT FALSE,
-                status BOOLEAN DEFAULT FALSE,
+                verification_token TEXT,
+                status INTEGER DEFAULT 0,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );

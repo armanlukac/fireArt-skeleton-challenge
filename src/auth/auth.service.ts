@@ -4,10 +4,15 @@ import {
   ConflictException,
 } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
+import { EmailService } from 'src/email/email.service';
+import * as crypto from 'crypto';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly emailService: EmailService,
+  ) {}
 
   async signup(
     email: string,
@@ -32,6 +37,17 @@ export class AuthService {
       password,
       first_name,
       last_name,
+    );
+
+    // Generate verification token
+    const verificationToken = crypto.randomBytes(32).toString('hex');
+    await this.usersService.saveVerificationToken(user.id, verificationToken);
+
+    // Send verification email
+    await this.emailService.sendVerificationEmail(
+      user.email,
+      user.first_name,
+      verificationToken,
     );
 
     if (user) {
