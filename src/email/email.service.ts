@@ -17,19 +17,35 @@ export class EmailService {
   ) {
     const verificationLink = `${this.configService.get<string>('EMAIL_VERIFICATION_URL')}?token=${token}`;
     const response = await this.resend.emails.send({
-      from: this.configService.get<string>(
-        'EMAIL_FROM',
-        'onboarding@resend.dev',
-      ),
+      from: this.configService.get<string>('EMAIL_FROM', 'arman@resend.dev'),
       to: email,
       subject: '[Skeleton Challenge] Verify Your Email',
       html: `
         <h1>Email Verification</h1>
+        <br>
         <p>Hi ${first_name}, please click the link below to verify your email:</p>
+        <br>
         <a href="${verificationLink}">Verify Email</a>
       `,
     });
-    console.log('RESPONSE ON VERIFICATION EMAIL:', response);
+
+    return response;
+  }
+
+  async sendResetEmail(email: string, resetLink: string) {
+    const response = await this.resend.emails.send({
+      from: this.configService.get<string>('EMAIL_FROM', 'arman@resend.dev'),
+      to: email,
+      subject: '[Skeleton Challenge] Password Reset',
+      html: `
+        <h1>Password Reset</h1>
+        <br>
+        <p>Click the link below to reset your password:</p>
+        <a href="${resetLink}">Reset Password</a>
+        <br>
+        <p>If you did not request this, please ignore this email.</p>
+      `,
+    });
 
     return response;
   }

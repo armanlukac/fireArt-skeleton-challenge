@@ -66,7 +66,7 @@ export class UsersService {
     return result.rows[0];
   }
 
-  // Password reset methods
+  // Password reset START
   async storeResetToken(userId: string, token: string, expiresAt: Date) {
     await this.db.query(
       `INSERT INTO password_resets (user_id, token, expires_at) VALUES ($1, $2, $3)`,
@@ -103,4 +103,34 @@ export class UsersService {
       [userId],
     );
   }
+
+  async updatePassword(userId: string, newPassword: string) {
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    await this.db.query(`UPDATE users SET password = $1 WHERE id = $2`, [
+      hashedPassword,
+      userId,
+    ]);
+  }
+
+  async validateResetTokenOrOtp(token?: string, otp?: string) {
+    let result: any;
+    console.log('Called validateResetTokenOrOtp');
+    console.log('token', token);
+    console.log('otp', otp);
+
+    if (token) {
+      result = await this.db.query(
+        `SELECT user_id FROM password_resets WHERE token = $1 AND expires_at > NOW() AND used = FALSE LIMIT 1`,
+        [token],
+      );
+    } else if (otp) {
+      result = await this.db.query(
+        `SELECT user_id FROM password_resets WHERE otp = $1 AND expires_at > NOW() AND used = FALSE LIMIT 1`,
+        [otp],
+      );
+    }
+
+    return result?.rows[0]?.user_id || null;
+  }
+  // Password reset END
 }
