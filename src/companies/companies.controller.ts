@@ -55,12 +55,12 @@ export class CompaniesController {
     return this.companiesService.updateCompany(id, dto);
   }
 
-  @Delete(':id')
+  @Patch(':id/delete')
   async softDelete(@Param('id') id: string) {
     return this.companiesService.softDeleteCompany(id);
   }
 
-  @Delete(':id/permanent')
+  @Delete(':id/permanent-delete')
   async permanentDelete(@Param('id') id: string) {
     return this.companiesService.permanentDeleteCompany(id);
   }
