@@ -1,4 +1,4 @@
-# fireArt-skeleton-challenge
+# FireArt Skeleton Challenge - Arman Lukac
 
 Demo / test app for FireArt Studio
 
@@ -27,7 +27,21 @@ Demo / test app for FireArt Studio
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Simple test backend application developed for the purposes of test task, for FireArt Studio.
+
+Functionalities applied:
+Authentication Flow
+
+- Signup, login, logout and password reset using token-based authentication.
+- Email verification using token, or OTP straight from the request.
+- Password reset using email, or OTP.
+
+Entity Management
+
+- Create, Read, Search, Update, and Delete (CRUD) operations via API.
+- Secure all entity operations with authentication.
+
+[Repo](https://github.com/armanlukac/fireArt-skeleton-challenge) Find repository attached to the link.
 
 ## Project setup
 
@@ -43,60 +57,45 @@ $ npm run start
 
 # watch mode
 $ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Run tests
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
 ```
 
 ## Deployment
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+Getting started with this project is easy. Just make sure you have all following installed and configured:
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+- Node.js
+- Typescript
+- Nest.js CLI
+- PostgreSQL
+
+Clone the repository provided at the top of this file, and install all dependencies.
+
+For local usage, create ENV file in your repository and paste all following variables.
+
+## ENV Variables
 
 ```bash
-$ npm install -g mau
-$ mau deploy
+PORT=3000
+DB_HOST=pg-19951df-skeleton-challenge.c.aivencloud.com
+DB_PORT=27062
+DB_USER=avnadmin
+DB_PASSWORD=AVNS_1bBTu5YxrgTjnbTfCdZ
+DB_NAME=defaultdb
+DB_SSL=require # Aiven requires SSL to connect
+#  JWT generated with crypto, 64 bytes
+JWT_SECRET=38d5267bbe5b78cfb6b418c85209309dc7a85e0f1b58bf14549bbb68723bdc99058ddbe6b2dd3b90026f096665b62ebf7ab69866908af83bf7f72cc2ec99aaf9
+JWT_EXPIRES_IN=3600s
+# Resend credentials
+RESEND_API_KEY=re_3UgBtpbM_DiP2xnHdzBsYpvZCVPhe7BpM
+EMAIL_FROM=skeleton-challenge@armanlukac.com
+# Local
+EMAIL_VERIFICATION_URL=http://localhost:3000/auth/verify-email
+PASSWORD_RESET_URL=http://localhost:3000/reset-password
+# Heroku
+# EMAIL_VERIFICATION_URL=https://skeleton-challenge-182da640f861.herokuapp.com/auth/verify-email
+# PASSWORD_RESET_URL=https://skeleton-challenge-182da640f861.herokuapp.com/reset-password
 ```
-
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
-
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
 
 ## Stay in touch
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+- Author - [Arman Lukac](https://www.linkedin.com/in/arman-lukac/)
