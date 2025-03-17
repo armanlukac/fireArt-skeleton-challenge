@@ -74,28 +74,7 @@ For local usage, create ENV file in your repository and paste all following vari
 
 ## ENV Variables
 
-```bash
-PORT=3000
-DB_HOST=pg-19951df-skeleton-challenge.c.aivencloud.com
-DB_PORT=27062
-DB_USER=avnadmin
-DB_PASSWORD=AVNS_1bBTu5YxrgTjnbTfCdZ
-DB_NAME=defaultdb
-DB_SSL=require # Aiven requires SSL to connect
-#  JWT generated with crypto, 64 bytes
-JWT_SECRET=38d5267bbe5b78cfb6b418c85209309dc7a85e0f1b58bf14549bbb68723bdc99058ddbe6b2dd3b90026f096665b62ebf7ab69866908af83bf7f72cc2ec99aaf9
-JWT_EXPIRES_IN=3600s
-# Resend credentials
-RESEND_API_KEY=re_3UgBtpbM_DiP2xnHdzBsYpvZCVPhe7BpM
-EMAIL_FROM=skeleton-challenge@armanlukac.com
-# Local
-EMAIL_VERIFICATION_URL=http://localhost:3000/auth/verify-email
-PASSWORD_RESET_URL=http://localhost:3000/reset-password
-# Heroku
-# EMAIL_VERIFICATION_URL=https://skeleton-challenge-182da640f861.herokuapp.com/auth/verify-email
-# PASSWORD_RESET_URL=https://skeleton-challenge-182da640f861.herokuapp.com/reset-password
-```
-
+For ENV variables, please contact the developer.
 PostgreSQL database is deployed in [Aiven](https://aiven.io),
 
 ## Deployment to Heroku
