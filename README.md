@@ -127,8 +127,8 @@ PASSWORD_RESET_URL=http://localhost:3000/reset-password
     app.enableCors(); // Allow CORS
     const PORT = process.env.PORT || 3000; // Use Heroku's provided port
     await app.listen(PORT);
-    }
-    bootstrap();
+  }
+  bootstrap();
   ```
 
 - Deploy to Heroku from GitHub
