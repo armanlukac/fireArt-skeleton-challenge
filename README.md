@@ -59,7 +59,7 @@ $ npm run start
 $ npm run start:dev
 ```
 
-## Deployment
+## Local Deployment
 
 Getting started with this project is easy. Just make sure you have all following installed and configured:
 
@@ -94,6 +94,53 @@ PASSWORD_RESET_URL=http://localhost:3000/reset-password
 # Heroku
 # EMAIL_VERIFICATION_URL=https://skeleton-challenge-182da640f861.herokuapp.com/auth/verify-email
 # PASSWORD_RESET_URL=https://skeleton-challenge-182da640f861.herokuapp.com/reset-password
+```
+
+## Deployment to Heroku
+
+- Create a Heroku app
+  1.  Go to Heroku and log in.
+  2.  Click “New” > “Create new app”.
+  3.  Enter an app name (must be unique).
+  4.  Choose a region (United States or Europe).
+  5.  Click “Create App”.
+- Connect Your GitHub Repository
+  1.  In the Heroku app dashboard, go to the “Deploy” tab.
+  2.  Scroll to “Deployment method” and select GitHub.
+  3.  Click “Connect to GitHub” and authorize Heroku.
+  4.  Find your NestJS repository and click “Connect”.
+- Set Environment Variables
+  1.  In your Heroku dashboard, go to “Settings”.
+  2.  Click “Reveal Config Vars”.
+  3.  Add all variables from the .env above
+- Configure main.ts for Heroku
+
+  1. Modify src/main.ts to use Heroku’s port:
+
+  ```bash
+  import { NestFactory } from '@nestjs/core';
+  import { AppModule } from './app.module';
+
+  async function bootstrap() {
+    const app = await NestFactory.create(AppModule);
+
+    app.enableCors(); // Allow CORS
+    const PORT = process.env.PORT || 3000; // Use Heroku's provided port
+    await app.listen(PORT);
+    }
+    bootstrap();
+  ```
+
+- Deploy to Heroku from GitHub
+  1. Go back to the Deploy tab in Heroku.
+  2. In “Automatic Deploys”, click “Enable Automatic Deploys” (optional).
+  3. In “Manual Deploy”, click “Deploy Branch”.
+- Check your deployment
+  Once deployed, find your app URL in Settings > Domains.
+  Test Your API
+
+```bash
+curl https://your-app-name.herokuapp.com/
 ```
 
 ## Stay in touch
