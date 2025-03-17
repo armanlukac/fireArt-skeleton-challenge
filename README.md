@@ -41,7 +41,7 @@ Entity Management
 - Create, Read, Search, Update, and Delete (CRUD) operations via API.
 - Secure all entity operations with authentication.
 
-[Repo](https://github.com/armanlukac/fireArt-skeleton-challenge) Find repository attached to the link.
+Find [repository](https://github.com/armanlukac/fireArt-skeleton-challenge) attached to the link.
 
 ## Project setup
 
