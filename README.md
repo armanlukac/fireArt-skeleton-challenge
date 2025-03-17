@@ -96,6 +96,8 @@ PASSWORD_RESET_URL=http://localhost:3000/reset-password
 # PASSWORD_RESET_URL=https://skeleton-challenge-182da640f861.herokuapp.com/reset-password
 ```
 
+PostgreSQL database is deployed in [Aiven](https://aiven.io),
+
 ## Deployment to Heroku
 
 - Create a Heroku app
